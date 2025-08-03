@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>welcome Page</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url('bcl.jpg'); /* Replace with your jpg file*/
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-blend-mode: normal;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.1em;
+            color: white;
+            background-color: #62c958;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0b7e0b;
+        }
+        #softwareName {
+            display: block;
+            font-size: 2.2em;
+            margin-top: 20px;
+            color:#ffffff;
+            font-family: 'Times New Roman', Times, serif;
+
+        }
+        .signature {
+            margin-top: 20px;
+            font-size: 1.2em;
+            color: rgb(255, 248, 248); /* Signature color */
+            font-family: 'Times New Roman', Times, serif;
+        }
+    </style>
+</head>
+<body>
+    <style>
+        h1 {
+            font-family: 'times new roman', sans-serif; /* Change this to your desired font */
+            font-size: 2.5em; /* Adjust the size as needed */
+            color: #fff5f5; /* Change the color if needed */
+        }
+    </style>
+    <div>
+    <h1>  Welcome to the Paper Formation Software</h1>
+    <button id="loginButton" onclick="showSoftwareName()">Click to Proceed</button>
+    <div id="softwareName">Auto-Paper Formation Software</div>
+</div>
+</body>
+<body>
+    <style> .quality-item {
+        margin: 10px 0;
+        font-size: 20px; /* Set the font size for the list items */
+        line-height: 1.0; /* Increase line height for better readability */
+        font-family: 'Times New Roman', Times, serif;/* Change font style for the list items */
+        color: #000000; 
+    }
+</style>
+    <p>Our software provides the following features:</p>
+    <div class="container qualities">
+        <h3>Features:</h3>
+        <style>
+        features{
+            font-family: 'Times New Roman', Times, serif;
+            color: #fffcfc;
+            size: 20%;
+        }
+    </style>
+    
+        <div class="quality-item">✔ User Login</div>
+        <div class="quality-item">✔ Subject Selection</div>
+        <div class="quality-item">✔ Marks Limit Configuration</div>
+        <div class="quality-item">✔ Class Specification</div>
+        <div class="quality-item">✔ Education Center Name Entry</div>
+        <div class="quality-item">✔ Add MCQs and Long Questions</div>
+        <div class="quality-item">✔ Edit Paper Before Final Generation</div>
+        <div class="quality-item">✔ Generate Papers in FBISE Format</div>
+    </div>
+    <div class="signature">Created by Omaimah Muhammed Mushtaq.</div>
+              <!-- Created by Omaimah Muhammed Mushtaq -->
+
+    <script>
+        function showSoftwareName() {
+            document.getElementById('softwareName').style.display = 'block';
+            document.getElementById('loginButton').style.display = 'none';
+
+            // Redirect to index.html after 1 seconds
+            setTimeout(() => {
+                window.location.href = 'file:///C:/Users/Abdullah/Desktop/software/New%20folder/inde.html';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

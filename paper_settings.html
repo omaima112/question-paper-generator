@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Settings</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-image: url('bck.jpg'); /* Replace with your image URL */
+            background-size: cover;
+        
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        .option-button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #4CAF50; /* Default color */
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .option-button:hover {
+            background-color: #46aa4b; /* Slightly darker on hover */
+        }
+        .selected {
+            background-color: #09460c; /* Darker green for selection */
+        }
+        #class-options {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            display: none; /* Hide total marks input initially */
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            font-size: 1.2em;
+            margin: 20px auto;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Paper Settings</h1>
+        
+        <div id="class-options">
+            <h2>Select Class:</h2>
+            <button class="option-button" onclick="setClass('SSC-I', this)">SSC-I</button>
+            <button class="option-button" onclick="setClass('SSC-II', this)">SSC-II</button>
+            <button class="option-button" onclick="setClass('HSSC-I', this)">HSSC-I</button>
+            <button class="option-button" onclick="setClass('HSSC-II', this)">HSSC-II</button>
+            <button class="option-button" onclick="showCustomClassInput()">Custom</button>
+        </div>
+        
+        <button type="submit" onclick="submitSettings()">Next</button>
+    </div>
+    
+    <script>
+        function setClass(className, button) {
+            localStorage.setItem('class', className);
+            resetButtonStyles('class-options');
+            button.classList.add('selected'); // Highlight the selected button
+        }
+
+        function showCustomClassInput() {
+            const customClass = prompt("Enter custom class name:");
+            if (customClass) {
+                localStorage.setItem('class', customClass);
+            }
+            resetButtonStyles('class-options'); // Reset styles on custom input
+        }
+
+        function resetButtonStyles(sectionId) {
+            const buttons = document.querySelectorAll(`#${sectionId} .option-button`);
+            buttons.forEach(button => button.classList.remove('selected')); // Remove highlight from all buttons
+        }
+
+        function submitSettings() {
+            const selectedClass = localStorage.getItem('class');
+            if (!selectedClass) {
+                alert("Please select a class before proceeding.");
+                return; // Prevent navigation if no class is selected
+            }
+            window.location.href = 'title_entry.html';
+            return false; // Prevent form submission
+        }
+    </script>
+</body>
+</html>
+

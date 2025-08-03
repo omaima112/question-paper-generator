@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subject Selection</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-image: url('bck.jpg'); /* Replace with your image URL */ 
+            background-size: cover;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            font-size: 1.2em;
+            margin: 20px auto;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            width: 100%;
+            font-family: 'Times New Roman', Times, serif;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+    <style>
+        option{
+            font-family: Georgia, 'Times New Roman', Times, serif;
+        }
+    </style>
+        <h1>Select Subject</h1>
+        <form onsubmit="return selectSubject()">
+            <select id="subject" required>
+                <option value="">Select a subject</option>
+                <option value="computer">Computer</option>
+                <option value="english">English</option>
+                <option value="urdu">Urdu</option>
+                <option value="physics">physics</option>
+                <option value="islamiyat">islamiyat</option>
+                <option value="mathematics">mathematics</option>
+                <option value="chemistry">chemistry</option>
+                <option value="statistics">statistics</option>
+                <option value="biology">biology</option>
+                <option value="pyschology">pyschology</option>
+                <option value="histroy">histroy</option>
+                <option value="geography">geography</option>
+                <option value="physical Education">physical Education</option>
+            </select>
+            <button type="submit">Next</button>
+        </form>  <!-- Created by Omaimah Muhammed Mushtaq --> <!-- Created by Omaimah Muhammed Mushtaq -->
+    </div>
+    <script>
+        function selectSubject() {
+            const subject = document.getElementById('subject').value;
+            localStorage.setItem('subject', subject); // Store selected subject
+            window.location.href = 'paper_settings.html';
+            return false; // Prevent form submission
+        }
+    </script>
+</body>
+</html>

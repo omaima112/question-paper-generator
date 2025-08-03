@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated Paper</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-image: url('tbh.jpg'); /* Replace with your image URL */
+    
+
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+        }
+        h2 {
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.2em;
+            margin: 5px 0;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #e7f3fe;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1.2em;
+            margin: 20px auto;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>  <!-- Created by Omaimah Muhammed Mushtaq -->
+    <div class="container">
+        <h1>Generated Exam Paper</h1>
+        
+        <input type="file" id="imageInput" accept="image/*">
+        
+        <h2>Paper Title:</h2>
+        <p id="paperTitleDisplay"></p>
+        
+        <h2>Total Marks:</h2>
+        <p id="totalMarksDisplay"></p>
+        
+        <h2>Selected MCQs:</h2>
+        <ul id="mcqList"></ul>
+        
+        <h2>Selected Short Questions:</h2>
+        <ul id="shortList"></ul>
+        
+        <h2>Selected Long Questions:</h2>
+        <ul id="longList"></ul>
+          
+         <!-- Created by Omaimah Muhammed Mushtaq -->
+
+        <style>
+            button {
+                font-family: 'times new roman', sans-serif; /* Change this to your desired font */
+                font-size: 1.5em; /* Adjust the size as needed */
+                color: #fff5f5; /* Change the color if needed */
+            }
+        </style>
+        
+        <button onclick="window.location.href='question_selection.html'">Edit Paper</button>
+        <button onclick="generatePDF()">Generate Paper</button>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const paperTitle = localStorage.getItem('paperTitle');
+            const totalMarks = localStorage.getItem('totalMarks');
+            const mcqs = JSON.parse(localStorage.getItem('selectedMCQs')) ;
+            const shorts = JSON.parse(localStorage.getItem('selectedShorts')) ;
+            const longs = JSON.parse(localStorage.getItem('selectedLongs')) ;
+
+            // Display paper title and total marks
+            document.getElementById('paperTitleDisplay').textContent = paperTitle;
+            document.getElementById('totalMarksDisplay').textContent = totalMarks;
+
+
+
+           
+mcqs.forEach(selectedMCQs => {
+    // Create an li element for each question set
+    const li = document.createElement('li');
+    
+    // Split the question and options using a regular expression to detect options (A), B), etc.)
+    const [question, ...options] = selectedMCQs.split(/(?=\s[A-D]\)\s:)/); // Split based on the pattern of options starting with A), B), C), D)
+
+    // Append the question
+    const questionText = document.createElement('span');
+    questionText.textContent = question.trim();
+    li.appendChild(questionText);
+    li.appendChild(document.createElement('br')); // Add a line break after the question
+
+    // Append each option on a new line
+    options.forEach(option => {
+        const optionText = document.createElement('span');
+        optionText.textContent = option.trim();
+        li.appendChild(optionText);
+        li.appendChild(document.createElement('br')); // Add a line break after each option
+    });
+
+    document.getElementById('mcqList').appendChild(li); // Append the question and options to the list
+});
+
+
+               // Display selected short questions with "OR" in pairs
+               for (let i = 0; i < shorts.length; i += 2) {
+                const li = document.createElement('li');
+                if (i + 1 < shorts.length) {
+                    li.textContent = shorts[i] + ' OR ' + shorts[i + 1];
+                } else {
+                    li.textContent = shorts[i]; // If odd number, show last question alone
+                }
+                document.getElementById('shortList').appendChild(li);
+            };
+            // Display selected long questions with "OR" in pairs
+            for (let i = 0; i < longs.length; i += 2) {
+                const li = document.createElement('li');
+                if (i + 1 < longs.length) {
+                    li.textContent = longs[i] + ' OR ' + longs[i + 1];
+                } else {
+                    li.textContent = longs[i]; // If odd number, show last question alone
+                }
+                document.getElementById('longList').appendChild(li);
+            };
+        });
+        let logoBase64 = '';
+
+        document.getElementById('imageInput').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = function() {
+                    logoBase64 = reader.result; // This will contain the Base64 encoded string
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        async function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4', putOnlyUsedFonts: true });
+           
+            // Set header texts
+            const headerText = "Roll No.  |_|_|_|_|_|_|";
+            const answerSheetText = "Answer Sheet No.___________";
+            const invigilatorSignatureText = "Sign. of Invigilator.___________";
+            const candidateSignatureText = " Sign. of Candidate.___________";
+            const versionnumbertext="Version No. |_|_|_|_|";
+            const pageWidth = doc.internal.pageSize.getWidth();
+
+            // Function to add header
+            function addHeader() {
+                doc.setFontSize(12);
+                doc.text(headerText, 33, 10); // Header on the left <!-- Created by Omaimah Muhammed Mushtaq -->
+                
+                // Add "Answer Sheet No." at the top right corner
+               doc.text(answerSheetText, pageWidth - 70, 10);
+                
+                // Add "Sign. of Invigilator" below "Answer Sheet No." on the right side
+                doc.text(invigilatorSignatureText, pageWidth - 70, 20);
+
+                // Add "Sign. of Candidate" below sign.of Inviligator on the right
+                doc.text(candidateSignatureText, 138, 30);
+                 
+                //Add "Version No." beside "Roll No." on the left
+                doc.text(versionnumbertext,33,20);
+                
+                // Add a line under the header
+                doc.line(10, 35, pageWidth -10, 35); // Line under header text
+
+                
+                // Add the logo at the top left corner if it exists
+                if (logoBase64) {
+                    doc.addImage(logoBase64, 'PNG', 9, 3, 20, 20); // Adjust dimensions as needed  <!-- Created by Omaimah Muhammed Mushtaq -->
+                }
+            }
+        
+            addHeader();
+            // Example of setting a custom font for the header
+            doc.setFont("times new roman", "bold"); // Set to times new roman Bold
+            doc.setFontSize(22); 
+            const instituteName = localStorage.getItem('title');
+            doc.text(instituteName, 109, 45, { align: "center" }); 
+            doc.setFontSize(14);
+              // Get the paper title from localStorage
+          const paperTitle = localStorage.getItem('paperTitle');
+
+       // Determine the x-coordinate for total marks based on title length
+         let totalMarksX = paperTitle.split(' ').length === 1 ? 120 : 135;
+
+        // Draw the paper title
+       doc.text(paperTitle, 96, 52, { align: "center" });
+         // Draw the total marks at the determined x-coordinate
+          doc.text("-T.Marks:" + localStorage.getItem('totalMarks'), totalMarksX, 52, { align: "center" });
+         
+            doc.setFontSize(14);
+            doc.text("Time allowed: 20 minutes",105,58,{align:"center"});
+            
+           // Set font for the section note
+           doc.setFont("TimesNewRoman", "italic");
+            // Add the note for Section A
+             doc.setFontSize(12);
+             doc.text("Section-A is compulsory. All parts of this section are to be answered on this page and handed over to the Centre Superintendent. Deleting/Overwriting is not allowed. Do not use lead pencil.", 10, 70, { maxWidth: 190 });
+            
+             //Set to times new roman bold
+            doc.setFont("times new roman", "bold"); 
+            // Add the heading for Q1
+            doc.setFontSize(14);
+             doc.text("Q1: Circle the correct answer. Each part carries one mark.", 10, 83);
+            //finish using font
+          
+               // Set font for the mcqs and options
+               doc.setFont("TimesNewRoman", "normal");
+            const mcqs = JSON.parse(localStorage.getItem('selectedMCQs')) || [];
+            doc.setFontSize(16);
+            doc.text("SECTION-A", 90, 65);
+            let mcqPosition = 95;
+
+            mcqs.forEach((mcq, index) => {
+                if (mcqPosition > 280) { // Check if we need a new page <!-- Created by Omaimah Muhammed Mushtaq -->
+                    doc.addPage();
+                    addHeader();
+                    mcqPosition = 40; // Reset position
+                }
+                doc.setFontSize(12);
+                 // Split the question and options
+    const [question, ...options] = mcq.split(/(?=\s[A-D]\)\s:)/);
+    
+    // Add question text
+    doc.text(question.trim(), 10, mcqPosition);
+    mcqPosition += 8; // Small space after the question
+
+    // Add options
+    options.forEach(option => {
+        doc.text(option.trim(), 20, mcqPosition); // Indent options for better readability
+        mcqPosition += 10; // Space between options
+    });
+
+    mcqPosition += 5; // Additional space after each question set
+});
+                   
+            // Add a small line after the MCQs finish
+             doc.line(6, mcqPosition, pageWidth -6, mcqPosition); // Small line after MCQs
+             function checkPageLimit() {
+    if (shortPosition >= 270) { // When you're near the bottom of the page
+        doc.addPage();          // Add a new page
+        shortPosition = 30;     // Reset vertical position for new page
+    }
+}
+
+            // Add pages for short and long questions
+            doc.addPage();
+            addHeader();
+            doc.setFontSize(14);
+            doc.text("Time allowed: ",25,30);
+            // Set font for the section note
+            doc.setFont("TimesNewRoman", "bold");
+            doc.setFontSize(16);
+            doc.text("SECTION-B(Marks:_) ", 90, 55,{align:"center"});
+            
+
+            // Set initial short question position
+              let shortPosition = 70; // Start below the Section B header
+
+           // Set font for the section note
+           doc.setFont("TimesNewRoman", "italic");
+            // Add the note for Section B/C
+             doc.setFontSize(12);
+             doc.text("Note: Answer all parts from Section'B' and all questions from Section'C' on the E-Sheet. Write your answers on the allotted/given spaces.", 10, 40, { maxWidth: 190 });
+           // Add a line under the Note
+             doc.line(10, 48, pageWidth - 10, 48); // Line under the Note
+
+            const shorts = JSON.parse(localStorage.getItem('selectedShorts')) || [];
+            for (let i = 0; i < shorts.length; i += 2) {
+    doc.setFontSize(12);
+    doc.setFont("TimesNewRoman", "normal");
+
+    let shortText = "";
+    if (i + 1 < shorts.length) {
+        shortText = (i / 2 + 1) + ". " + shorts[i] + " OR " + shorts[i + 1];
+    } else {
+        shortText = (i / 2 + 1) + ". " + shorts[i];
+    }
+
+    // Split the text to fit within the page width so no overlapping drama
+    const wrappedShort = doc.splitTextToSize(shortText, 180); // Adjust width as needed
+    doc.text(wrappedShort, 10, shortPosition);
+
+    // Add spacing based on how many lines the wrapped text took
+    shortPosition += wrappedShort.length * 5 + 5; // 10 per line + 5 for breathing room
+}
+checkPageLimit(); // 🔥 call this to move to next page if needed
+
+            
+         // Long questions on the same page or new if necessary
+const longs = JSON.parse(localStorage.getItem('selectedLongs')) || [];
+
+// Set to Times New Roman Bold for Section-C title
+doc.setFont("TimesNewRoman", "bold");
+doc.setFontSize(16);
+doc.text("SECTION-C", 105, shortPosition + 15, { align: "center" }); // Centered title
+shortPosition += 30; // Extra space after the title
+
+// Loop through long questions in pairs
+for (let i = 0; i < longs.length; i += 2) {
+    doc.setFontSize(12);
+    doc.setFont("TimesNewRoman", "normal");
+
+    let textToDisplay = "";
+    if (i + 1 < longs.length) {
+        textToDisplay = (i / 2 + 1) + ". " + longs[i] + " OR " + longs[i + 1];
+    } else {
+        textToDisplay = (i / 2 + 1) + ". " + longs[i];
+    }
+
+    // Split long text properly
+    const wrappedLong = doc.splitTextToSize(textToDisplay, 170); // Width limit
+    doc.text(wrappedLong, 10, shortPosition);
+
+    // Add spacing based on text height
+    shortPosition += wrappedLong.length * 5 + 10; // 10 per line + 10 extra for spacing
+}
+checkPageLimit(); // 🔥 call this to move to next page if needed
+
+    
+    // Save the PDF
+    doc.save("Generated_Paper.pdf");
+
+}
+
+    </script>
+</body>
+</html>

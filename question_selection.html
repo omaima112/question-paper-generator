@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Selection</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+            background-image: url('tbh.jpg'); /* Replace with your image URL */
+            background-position: 0%;
+        
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            font-family: 'Times New Roman', Times, serif;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            font-family: 'Times New Roman', Times, serif;
+            color: #4CAF50;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 15px;
+            display: block;
+        }
+        input[type="text"], input[type="number"] {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        h2 {
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        div.question {
+            background: #e7f3fe;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 1.2em;
+            margin: 20px auto;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #16661a;
+        }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        #suggestionContainer { 
+            border: 1px solid #ccc; 
+            padding: 20px; 
+            size: 100%;
+            margin-top: 20px; 
+            background-color: #fff8f8; 
+            font-family: 'Times New Roman', Times, serif;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: auto;
+        }
+        h3 { margin-top: 20px;
+            font-family: 'Times New Roman', Times, serif;
+            text-align: center;
+            color: #4CAF50;
+         }
+         
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Select Questions</h1>
+        <form onsubmit="return selectQuestions()">
+            <label for="paperTitle">Paper Title:</label>
+            <input type="text" id="paperTitle" required>
+            
+            <label for="totalMarks">Total Marks:</label>
+            <input type="number" id="totalMarks" required>
+
+            <h3>Suggested Marks Division</h3>
+            <div id="suggestionContainer">
+                <div id="suggestion"></div>
+            </div>
+            
+            <script>
+                const totalMarksInput = document.getElementById('totalMarks');
+                const suggestion = document.getElementById('suggestion');
+            
+                totalMarksInput.addEventListener('input', updateSuggestions);
+            
+                function updateSuggestions() {
+                    const limit = parseInt(totalMarksInput.value) || 0;
+            
+                    // Calculate suggested selections
+                    let results = [];
+        
+        for (let longs = 0; longs <= Math.floor(limit / 5); longs++) {
+            for (let shorts = 0; shorts <= Math.floor((limit - (longs * 5)) / 3); shorts++) {
+                const remainingMarks = limit - (longs * 5 + shorts* 3);
+                const mcqs = remainingMarks; // Each MCQ is 1 mark
+                if (mcqs >= 0) {
+                    results.push(`MCQs: ${mcqs}, Shorts: ${shorts}, Longs: ${longs}`);
+                }
+            }
+        }
+            // Limit results to 10 if total marks are above 30
+        if (limit > 30) {
+            results = results.slice(20, 30);
+        }
+
+        suggestion.innerHTML = results.length > 0 
+            ? `You can select the following combinations to reach ${limit} marks:<br>${results.join('<br>')}` 
+            : 'No valid combinations found.';
+    } 
+    </script>
+            
+            <h2>Q1: Select MCQs</h2>
+            <!-- Chapter: Computer Systems -->
+         <h3>Chapter 1: Computer Systems</h3>
+            <div id="mcqOptions">
+                <div class="question">
+                   <p>What is the main function of the ALU?</p>
+                    <p> Arithmetic operations</p>
+                    <p> Logical operations</p>
+                    <p> Memory storage</p>
+                    <p> Data retrieval</p>
+                    <input type="checkbox" name="mcq1" value="1"> Select
+                </div>
+                <div class="question">
+                    <p>Which device is used to store data permanently?</p>
+                    <p> RAM</p>
+                    <p> Hard Disk</p>
+                    <p>Cache</p>
+                    <p> CPU</p>
+                    <input type="checkbox" name="mcq2" value="2"> Select
+                </div>
+                <div class="question">
+                    <p>What does CPU stand for?</p>
+                    <p> Central Processing Unit</p>
+                    <p> Computer Personal Unit</p>
+                    <p> Central Power Unit</p>
+                    <p> Core Processing Unit</p>
+                    <input type="checkbox" name="mcq3" value="3"> Select
+                </div>
+                <div class="question">
+                    <p>What is the purpose of an operating system?</p>
+                    <p> To manage hardware and software resources</p>
+                    <p> To perform calculations</p>
+                    <p> To provide entertainment</p>
+                    <p> To store data</p>
+                    <input type="checkbox" name="mcq4" value="4"> Select
+                </div>
+                <div class="question">
+                    <p>Which of the following is an input device?</p>
+                    <p> Keyboard</p>
+                    <p> Monitor</p>
+                    <p> Printer</p>
+                    <p> Speaker</p>
+                    <input type="checkbox" name="mcq5" value="5"> Select
+                </div>
+                <div class="question">
+                    <p>2. Which component is considered the brain of the computer?</p>
+                    <p>RAM</p>
+                    <p>Hard Drive</p>
+                    <p>CPU</p>
+                    <p>Motherboard</p>
+                    <input type="checkbox" name="mcq2" value="2"> Select
+                </div>
+                <div class="question">
+                    <p>1. What does SDLC stand for?</p>
+                    <p>Software Development Life Cycle</p>
+                    <p>System Development Life Cycle</p>
+                    <p>Software Design Life Cycle</p>
+                    <p>None of the above</p>
+                    <input type="checkbox" name="mcq1" value="1"> Select
+                </div>
+                <div class="question">
+                    <p>2. Which phase comes first in the SDLC?</p>
+                    <p>Testing</p>
+                    <p>Implementation</p>
+                    <p>Planning</p>
+                    <p>Maintenance</p>
+                    <input type="checkbox" name="mcq2" value="2"> Select
+                </div>
+                <div class="question">
+                    <p>3. What is a key purpose of the requirements analysis phase?</p>
+                    <p>To gather user requirements</p>
+                    <p>To code the application</p>
+                    <p>To deploy the application</p>
+                    <p>None of the above</p>
+                    <input type="checkbox" name="mcq3" value="3"> Select
+                </div>
+                <div class="question">
+                    <p>4. In which SDLC phase is testing performed?</p>
+                    <p>Planning</p>
+                    <p>Design</p>
+                    <p>Implementation</p>
+                    <p>Testing</p>
+                    <input type="checkbox" name="mcq4" value="4"> Select
+                </div>
+                <div class="question">
+                    <p>5. What is a network topology?</p>
+                    <p>The arrangement of different elements in a computer network</p>
+                    <p>The speed of data transfer</p>
+                    <p>A type of programming language</p>
+                    <p>None of the above</p>
+                    <input type="checkbox" name="mcq5" value="5"> Select
+                </div>
+                <div class="question">
+                    <p>6. Which topology connects all devices to a single central hub?</p>
+                    <p>Star topology</p>
+                    <p>Bus topology</p>
+                    <p>Mesh topology</p>
+                    <p>Ring topology</p>
+                    <input type="checkbox" name="mcq6" value="6"> Select
+                </div>
+                <div class="question">
+                    <p>7. What is the primary disadvantage of a bus topology?</p>
+                    <p>Single point of failure</p>
+                    <p>High cost</p>
+                    <p>Low speed</p>
+                    <p>None of the above</p>
+                    <input type="checkbox" name="mcq7" value="7"> Select
+                </div>
+                <div class="question">
+                    <p>8. Which topology is the most reliable?</p>
+                    <p>Star topology</p>
+                    <p>Bus topology</p>
+                    <p>Mesh topology</p>
+                    <p>Ring topology</p>
+                    <input type="checkbox" name="mcq8" value="8"> Select
+                </div>
+                <div class="question">
+                    <p>9. What is a firewall?</p>
+                    <p>A device that monitors and controls incoming and outgoing network traffic</p>
+                    <p>A type of software for editing files</p>
+                    <p>A physical barrier for computers</p>
+                    <p>None of the above</p>
+                    <input type="checkbox" name="mcq9" value="9"> Select
+                </div>
+                <div class="question">
+                    <p>10. What is the purpose of encryption?</p>
+                    <p>To protect data by converting it into a secure format</p>
+                    <p>To increase data speed</p>
+                    <p>To delete unnecessary data</p>
+                    <p>None of the above</p>
+                    <input type="checkbox" name="mcq10" value="10"> Select
+                </div>
+                <!-- Chapter: Computational Thinking and Algorithms -->
+<h3>Chapter 2: Computational Thinking and Algorithms</h3>
+<div id="computational-thinking-mcqs">
+    <div class="question">
+        <p> What is an algorithm?</p>
+        <p>A programming language</p>
+        <p>A step-by-step procedure to solve a problem</p>
+        <p>A data structure</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq11" value="11"> Select
+    </div>
+    <div class="question">
+        <p> Which of the following best describes decomposition?</p>
+        <p>Breaking a problem into smaller parts</p>
+        <p>Analyzing data</p>
+        <p>Testing a solution</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq12" value="12"> Select
+    </div>
+    <div class="question">
+        <p> What is abstraction?</p>
+        <p>Ignoring details to focus on the main idea</p>
+        <p>A programming error</p>
+        <p>A type of data structure</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq13" value="13"> Select
+    </div>
+    <div class="question">
+        <p> What does flowchart represent?</p>
+        <p>A graphical representation of an algorithm</p>
+        <p>A type of programming language</p>
+        <p>A storage method</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq14" value="14"> Select
+    </div>
+    <div class="question">
+        <p> What is a loop in programming?</p>
+        <p>A way to repeat a set of instructions</p>
+        <p>A type of data</p>
+        <p>A programming error</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq15" value="15"> Select
+    </div>
+    <div class="question">
+        <p> What is the purpose of pseudocode?</p>
+        <p>To describe algorithms in a human-readable format</p>
+        <p>To write actual code</p>
+        <p>To debug programs</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq16" value="16"> Select
+    </div>
+    <div class="question">
+        <p> What does the term "iteration" mean?</p>
+        <p>Repeating a process</p>
+        <p>Breaking down a problem</p>
+        <p>Creating a flowchart</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq17" value="17"> Select
+    </div>
+    <div class="question">
+        <p> What is a condition in programming?</p>
+        <p>A statement that controls the flow of execution</p>
+        <p>A variable declaration</p>
+        <p>A type of loop</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq18" value="18"> Select
+    </div>
+    <div class="question">
+        <p> What is the purpose of a variable?</p>
+        <p>To store data</p>
+        <p>To perform calculations</p>
+        <p>To control the flow of a program</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq19" value="19"> Select
+    </div>
+    <div class="question">
+        <p> What is recursion?</p>
+        <p>A function that calls itself</p>
+        <p>A type of loop</p>
+        <p>A method of sorting data</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq20" value="20"> Select
+    </div>
+
+    <!-- Chapter: Programming Fundamentals -->
+  <h3>Chapter 3: Programming Fundamentals</h3>
+   <div id="programming-fundamentals-mcqs">
+    <div class="question">
+        <p> What is a variable?</p>
+        <p>A value that cannot change</p>
+        <p>A named storage location</p>
+        <p>A type of function</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq21" value="21"> Select
+    </div>
+    <div class="question">
+        <p> What is a function?</p>
+        <p>A reusable piece of code that performs a specific task</p>
+        <p>A type of variable</p>
+        <p>A control structure</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq22" value="22">Select 
+    </div>
+        <div class="question">
+         <p> What is the purpose of a loop?</p>
+         <p>To execute a block of code multiple times</p>
+         <p>To define a function</p>
+         <p>To store a value</p>
+         <p>None of the above</p>
+        <input type="checkbox" name="mcq23" value="23"> Select
+        </div>
+        <div class="question">
+         <p> What is an array?</p>
+        <p>A collection of elements identified by index or key</p>
+        <p>A type of loop</p>
+        <p>A single data value</p>
+         <p>None of the above</p>
+        <input type="checkbox" name="mcq24" value="24"> Select
+        </div>
+        <div class="question">
+            <p> What is the difference between syntax and semantics?</p>
+            <p>Syntax refers to structure, semantics refers to meaning</p>
+            <p>They are the same</p>
+            <p>Syntax is about execution, semantics is about structure</p>
+            <p>None of the above</p>
+            <input type="checkbox" name="mcq25" value="25"> Select
+        </div>
+        <div class="question">
+            <p> What does debugging mean?</p>
+            <p>Finding and fixing errors in code</p>
+            <p>Writing new code</p>
+            <p>Testing software</p>
+            <p>None of the above</p>
+            <input type="checkbox" name="mcq26" value="26"> Select
+        </div>
+        <div class="question">
+            <p> Which of the following is a control structure?</p>
+            <p>If statement</p>
+            <p>Function</p>
+            <p>Variable</p>
+            <p>Array</p>
+            <input type="checkbox" name="mcq27" value="27"> Select
+        </div>
+        <div class="question">
+            <p> What is the purpose of comments in code?</p>
+            <p>To explain the code to others</p>
+            <p>To execute code</p>
+            <p>To store data</p>
+            <p>None of the above</p>
+            <input type="checkbox" name="mcq28" value="28"> Select
+        </div>
+        <div class="question">
+            <p> What is a class in object-oriented programming?</p>
+            <p>A blueprint for creating objects</p>
+            <p>A type of function</p>
+            <p>A control structure</p>
+            <p>None of the above</p>
+            <input type="checkbox" name="mcq29" value="29"> Select
+        </div>
+        <div class="question">
+            <p> What is an exception?</p>
+            <p>An error that occurs during program execution</p>
+            <p>A type of variable</p>
+            <p>A control structure</p>
+            <p>None of the above</p>
+            <input type="checkbox" name="mcq30" value="30"> Select
+        </div>
+ <!-- Chapter: Data and Analysis -->
+<h3>Chapter 4: Data and Analysis</h3>
+<div id="data-and-analysis-mcqs">
+    <div class="question">
+        <p> What is data?</p>
+        <p>Raw facts and figures</p>
+        <p>Processed information</p>
+        <p>A type of software</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq31" value="31"> Select
+    </div>
+    <div class="question">
+        <p> What is data analysis?</p>
+        <p>The process of inspecting and interpreting data</p>
+        <p>A method of data storage</p>
+        <p>A programming technique</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq32" value="32"> Select
+    </div>
+    <div class="question">
+        <p> What is a database?</p>
+        <p>A structured collection of data</p>
+        <p>A programming language</p>
+        <p>A type of algorithm</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq33" value="33"> Select
+    </div>
+    <div class="question">
+        <p> What does SQL stand for?</p>
+        <p>Structured Query Language</p>
+        <p>Simple Query Language</p>
+        <p>Standard Query Language</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq34" value="34"> Select
+    </div>
+    <div class="question">
+        <p> What is big data?</p>
+        <p>Large volumes of data that cannot be processed by traditional methods</p>
+        <p>A type of database</p>
+        <p>A programming error</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq35" value="35"> Select
+    </div>
+    <div class="question">
+        <p> What is a primary key in a database?</p>
+        <p>A unique identifier for a record</p>
+        <p>A type of data</p>
+        <p>A control structure</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq36" value="36"> Select
+    </div>
+    <div class="question">
+        <p> What is data visualization?</p>
+        <p>The graphical representation of information and data</p>
+        <p>A type of algorithm</p>
+        <p>A programming technique</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq37" value="37"> Select
+    </div>
+    <div class="question">
+        <p> What is the purpose of data mining?</p>
+        <p>To discover patterns and relationships in large data sets</p>
+        <p>To store data</p>
+        <p>A method of data encryption</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq38" value="38"> Select
+    </div>
+    <div class="question">
+        <p> What is machine learning?</p>
+        <p>A subset of AI that enables systems to learn from data</p>
+        <p>A type of database</p>
+        <p>A programming language</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq39" value="39"> Select
+    </div>
+    <div class="question">
+        <p> What is a spreadsheet?</p>
+        <p>A software application for data organization and analysis</p>
+        <p>A type of database</p>
+        <p>A programming language</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq40" value="40"> Select
+    </div>
+</div>
+
+<!-- Chapter: Application of Computer Science -->
+<h3>Chapter 5: Application of Computer Science</h3>
+<div id="application-computer-science-mcqs">
+    <div class="question">
+        <p> What is the purpose of programming?</p>
+        <p>To create software applications</p>
+        <p>To analyze data</p>
+        <p>To design hardware</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq41" value="41"> Select
+    </div>
+    <div class="question">
+        <p> What is software development?</p>
+        <p>The process of creating and maintaining software applications</p>
+        <p>A method of data analysis</p>
+        <p>A type of algorithm</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq42" value="42"> Select
+    </div>
+    <div class="question">
+        <p> What is a web application?</p>
+        <p>A software application that runs on a web server</p>
+        <p>A type of programming language</p>
+        <p>A hardware device</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq43" value="43"> Select
+    </div>
+    <div class="question">
+        <p> What is cloud computing?</p>
+        <p>The delivery of computing services over the internet</p>
+        <p>A type of data storage</p>
+        <p>A programming error</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq44" value="44"> Select
+    </div>
+    <div class="question">
+        <p> What is the Internet of Things (IoT)?</p>
+        <p>The interconnection of everyday objects to the internet</p>
+        <p>A type of network</p>
+        <p>A programming language</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq45" value="45"> Select
+    </div>
+    <div class="question">
+        <p> What is artificial intelligence (AI)?</p>
+        <p>The simulation of human intelligence in machines</p>
+        <p>A type of programming language</p>
+        <p>A data structure</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq46" value="46"> Select
+    </div>
+    <div class="question">
+        <p> What is cybersecurity?</p>
+        <p>The practice of protecting systems from digital attacks</p>
+        <p>A type of programming error</p>
+        <p>A hardware device</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq47" value="47"> Select
+    </div>
+    <div class="question">
+        <p> What is e-commerce?</p>
+        <p>The buying and selling of goods online</p>
+        <p>A type of software</p>
+        <p>A data structure</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq48" value="48"> Select
+    </div>
+    <div class="question">
+        <p> What is a mobile application?</p>
+        <p>A software application designed to run on mobile devices</p>
+        <p>A type of database</p>
+        <p>A programming language</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq49" value="49"> Select
+    </div>
+    <div class="question">
+        <p> What is a user interface (UI)?</p>
+        <p>The means by which a user interacts with a computer program</p>
+        <p>A type of programming language</p>
+        <p>A hardware component</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq50" value="50"> Select
+    </div>
+</div>
+
+<!-- Chapter: Impacts of Computing -->
+<h3>Chapter 6: Impacts of Computing</h3>
+<div id="impacts-computing-mcqs">
+    <div class="question">
+        <p> What is digital literacy?</p>
+        <p>The ability to use technology and the internet effectively</p>
+        <p>A programming skill</p>
+        <p>A type of software</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq51" value="51"> Select
+    </div>
+    <div class="question">
+        <p> How has computing impacted education?</p>
+        <p>By providing access to online resources</p>
+        <p>By eliminating traditional teaching</p>
+        <p>Affecting only higher education</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq52" value="52"> Select
+    </div>
+    <div class="question">
+        <p> What is a digital divide?</p>
+        <p>The gap between those with access to technology and those without</p>
+        <p>A type of software</p>
+        <p>A programming error</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq53" value="53"> Select
+    </div>
+    <div class="question">
+        <p> What is telecommuting?</p>
+        <p>Working remotely using technology</p>
+        <p>A programming term</p>
+        <p>A type of database</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq54" value="54"> Select
+    </div>
+    <div class="question">
+        <p> How has computing affected business?</p>
+        <p>By enabling online transactions and communication</p>
+        <p>By reducing job opportunities</p>
+        <p>By eliminating traditional jobs</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq55" value="55"> Select
+    </div>
+    <div class="question">
+        <p> What is cybersecurity's role in business?</p>
+        <p>To protect sensitive information</p>
+        <p>To increase productivity</p>
+        <p>To eliminate risks</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq56" value="56"> Select
+    </div>
+    <div class="question">
+        <p> What is the impact of social media?</p>
+        <p>It connects people globally</p>
+        <p>It is only for entertainment</p>
+        <p>It has no impact on communication</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq57" value="57"> Select
+    </div>
+    <div class="question">
+        <p> What is the environmental impact of computing?</p>
+        <p>It generates e-waste</p>
+        <p>It has no impact</p>
+        <p>It reduces pollution</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq58" value="58"> Select
+    </div>
+    <div class="question">
+        <p> How can technology promote social change?</p>
+        <p>By raising awareness and mobilizing communities</p>
+        <p>By isolating individuals</p>
+        <p>By decreasing communication</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq59" value="59"> Select
+    </div>
+    <div class="question">
+        <p> What is a digital footprint?</p>
+        <p>The trail of data you leave on the internet</p>
+        <p>A type of software</p>
+        <p>A programming concept</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq60" value="60"> Select
+    </div>
+</div>
+
+<!-- Chapter: Digital Literacy -->
+<h3>Chapter 7: Digital Literacy</h3>
+<div id="digital-literacy-mcqs">
+    <div class="question">
+        <p> What is the primary skill of digital literacy?</p>
+        <p>Using technology effectively</p>
+        <p>Programming</p>
+        <p>Hardware maintenance</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq61" value="61"> Select
+    </div>
+    <div class="question">
+        <p> What is online safety?</p>
+        <p>Protecting oneself while using the internet</p>
+        <p>Using technology responsibly</p>
+        <p>A programming concept</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq62" value="62"> Select
+    </div>
+    <div class="question">
+        <p> What is phishing?</p>
+        <p>A fraudulent attempt to obtain sensitive information</p>
+        <p>A type of software</p>
+        <p>A programming error</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq63" value="63"> Select
+    </div>
+    <div class="question">
+        <p> What does the term "digital citizenship" refer to?</p>
+        <p>The responsible use of technology by individuals</p>
+        <p>A type of software</p>
+        <p>A programming concept</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq64" value="64"> Select
+    </div>
+    <div class="question">
+        <p> What is cyberbullying?</p>
+        <p>The use of technology to harass or intimidate others</p>
+        <p>A type of programming error</p>
+        <p>A hardware issue</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq65" value="65"> Select
+    </div>
+    <div class="question">
+        <p> What is digital privacy?</p>
+        <p>The right to control how personal information is collected and used</p>
+        <p>A programming concept</p>
+        <p>A type of software</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq66" value="66"> Select
+    </div>
+    <div class="question">
+        <p> What is media literacy?</p>
+        <p>The ability to access, analyze, evaluate, and create media</p>
+        <p>A programming concept</p>
+        <p>A type of software</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq67" value="67"> Select
+    </div>
+    <div class="question">
+        <p> What is a secure password?</p>
+        <p>A password that is difficult to guess and includes a mix of characters</p>
+        <p>A common word</p>
+        <p>A type of software</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq68" value="68"> Select
+    </div>
+    <div class="question">
+        <p> What is the role of antivirus software?</p>
+        <p>To detect and remove malicious software</p>
+        <p>A type of programming</p>
+        <p>A hardware component</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq69" value="69"> Select
+    </div>
+    <div class="question">
+        <p> What is digital well-being?</p>
+        <p>The ability to use technology in a balanced and healthy way</p>
+        <p>A programming concept</p>
+        <p>A type of software</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq70" value="70"> Select
+    </div>
+       <!-- Chapter: Entrepreneurship in the Digital Age -->
+<h3>Chapter 8: Entrepreneurship in the Digital Age</h3>
+<div id="entrepreneurship-digital-age-mcqs">
+    <div class="question">
+        <p> What is e-commerce?</p>
+        <p>The buying and selling of goods over the internet</p>
+        <p>A type of software</p>
+        <p>A business model</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq71" value="71"> Select
+    </div>
+    <div class="question">
+        <p> What is a startup?</p>
+        <p>A newly established business</p>
+        <p>A type of investment</p>
+        <p>A method of marketing</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq72" value="72"> Select
+    </div>
+    <div class="question">
+        <p> What does a business plan include?</p>
+        <p>Strategies for growth, financial projections, and market analysis</p>
+        <p>Only financial details</p>
+        <p>A list of employees</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq73" value="73"> Select
+    </div>
+    <div class="question">
+        <p> What is crowdfunding?</p>
+        <p>Collecting money from a large number of people to fund a project</p>
+        <p>A type of investment</p>
+        <p>A government grant</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq74" value="74"> Select
+    </div>
+    <div class="question">
+        <p> What is digital marketing?</p>
+        <p>Marketing through digital channels to reach consumers</p>
+        <p>A type of traditional marketing</p>
+        <p>A method of product development</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq75" value="75"> Select
+    </div>
+    <div class="question">
+        <p> What is a value proposition?</p>
+        <p>A statement that explains how a product solves a problem</p>
+        <p>A marketing strategy</p>
+        <p>A financial report</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq76" value="76"> Select
+    </div>
+    <div class="question">
+        <p> What is the role of social media in business?</p>
+        <p>To engage with customers and promote products</p>
+        <p>To replace traditional advertising</p>
+        <p>It has no role</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq77" value="77"> Select
+    </div>
+    <div class="question">
+        <p> What is an online marketplace?</p>
+        <p>A website where multiple sellers offer their products</p>
+        <p>A type of software</p>
+        <p>A business strategy</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq78" value="78"> Select
+    </div>
+    <div class="question">
+        <p> What is a target market?</p>
+        <p>A specific group of consumers that a business aims to reach</p>
+        <p>A type of product</p>
+        <p>A sales strategy</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq79" value="79"> Select
+    </div>
+    <div class="question">
+        <p> What is a digital product?</p>
+        <p>A product that is delivered electronically</p>
+        <p>A type of physical product</p>
+        <p>A service</p>
+        <p>None of the above</p>
+        <input type="checkbox" name="mcq80" value="80"> Select
+    </div>
+   
+                <!-- Add more MCQs similarly up to 90 -->
+            </div>
+            
+            <h2>Q2: Select Short Questions</h2>
+            <!-- Chapter: Computer Systems -->
+           <h3>Chapter 1: Computer Systems</h3>
+            <div id="shortQuestions">
+                <div class="question">
+                    <input type="checkbox" value=" What are the phases of the Software Development Life Cycle (SDLC)?"> What are the phases of the Software Development Life Cycle (SDLC)?
+                </div>
+                <div class="question"> 
+                    <input type="checkbox" value="Explain the role of requirements analysis in the SDLC.">Explain the role of requirements analysis in the SDLC.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value=" What is the purpose of the design phase in the SDLC?"> What is the purpose of the design phase in the SDLC?
+                </div>
+                <div class="question"> 
+                    <input type="checkbox" value="What are the different types of software testing?">What are the different types of software testing?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value=" Explain what is meant by network topology."> Explain what is meant by network topology.
+                </div>
+                <div class="question"> 
+                    <input type="checkbox" value="What are the advantages of a star topology?">What are the advantages of a star topology?
+                </div>
+                <div class="question"> 
+                    <input type="checkbox" value="Describe the characteristics of a bus topology.">Describe the characteristics of a bus topology.
+                </div>
+                <div class="question"> 
+                    <input type="checkbox" value="What is cybersecurity, and why is it important?">What is cybersecurity, and why is it important?
+                </div>
+                <div class="question"> 
+                    <input type="checkbox" value="Explain the concept of a firewall and its purpose.">Explain the concept of a firewall and its purpose.
+                </div>
+                <!-- Chapter: Computational Thinking and Algorithms -->
+<h3>Chapter 2: Computational Thinking and Algorithms</h3>
+<div id="computational-thinking-shorts">
+    <div class="question"> 
+        <input type="checkbox" value="What is computational thinking?">What is computational thinking?
+    </div>
+    <div class="question">
+        <input type="checkbox" value=" Describe the concept of an algorithm."> Describe the concept of an algorithm.
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What is the importance of problem decomposition?">What is the importance of problem decomposition?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Explain the term abstraction in computing.">Explain the term "abstraction" in computing.
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What are flowcharts used for?">What are flowcharts used for?
+    </div>
+    <div class="question">
+        <input type="checkbox" value=" Describe the role of pseudocode in programming."> Describe the role of pseudocode in programming.
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What is the difference between a sequence and a loop">What is the difference between a sequence and a loop
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What is recursion in algorithms?">What is recursion in algorithms?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Explain the term iteration.">Explain the term "iteration."
+    </div>
+    <div class="question">
+        <input type="checkbox" value=" What is a data structure?"> What is a data structure?
+    </div>
+</div>
+
+<!-- Chapter: Programming Fundamentals -->
+<h3>Chapter 3: Programming Fundamentals</h3>
+<div id="programming-fundamentals-shorts">
+    <div class="question">
+        <input type="checkbox" value=" What is a variable in programming?"> What is a variable in programming?
+    </div>
+    <div class="question">
+        <input type="checkbox" value="Explain how the Bubble Sort algorithm works and describe the role of bubble iteration in sorting a list of numbers.">Explain how the Bubble Sort algorithm works and describe the role of bubble iteration in sorting a list of numbers.
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What are conditional statements?">What are conditional statements?
+    </div>
+    <div class="question">
+        <input type="checkbox" value="What is the output of `print(10 % 3)` in Python?">What is the output of `print(10 % 3)` in Python?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What is debugging?">What is debugging?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Describe what an array is.">Describe what an array is.
+    </div>
+    <div class="question">
+            <input type="checkbox" value="How does a stack differ from a queue?">How does a stack differ from a queue?
+        </div>
+    <div class="question">
+        <input type="checkbox" value="What is object-oriented programming?">What is object-oriented programming?
+    </div>
+    <div class="question">
+        <input type="checkbox" value="Explain the concept of inheritance in programming.">Explain the concept of inheritance in programming.
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What is the difference between interpreted and compiled languages?">What is the difference between interpreted and compiled languages?
+    </div>
+</div>
+
+<!-- Chapter: Data and Analysis -->
+<h3>Chapter 4: Data and Analysis</h3>
+<div id="data-analysis-shorts">
+    <div class="question"> 
+        <input type="checkbox" value="What is data mining?">What is data mining?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Describe the purpose of databases.">Describe the purpose of databases.
+    </div>
+    <div class="question">
+        <input type="checkbox" value="What is Agile methodology? explain berifly.">What is Agile methodology? explain berifly.
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Explain the term data visualization.">Explain the term "data visualization."
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What is the significance of data security?">What is the significance of data security?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What is a data analyst's role?">What is a data analyst's role?
+    </div>
+    <div class="question">
+     <input type="checkbox" value="How does encapsulation promote modularity and information hiding in software design? Provide examples from a programming language of your choice.">How does encapsulation promote modularity and information hiding in software design? Provide examples from a programming language of your choice.
+        </div>
+    <div class="question"> 
+        <input type="checkbox" value="What are structured and unstructured data?">What are structured and unstructured data?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What is a database management system (DBMS)?">What is a database management system (DBMS)?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Explain the importance of data integrity.">Explain the importance of data integrity.
+    </div>
+</div>
+
+<!-- Chapter: Application of Computer Science -->
+<h3>Chapter 5: Application of Computer Science</h3>
+<div id="application-computer-science-shorts">
+    <div class="question">
+        <input type="checkbox" value=" What are the common applications of computer science in healthcare?"> What are the common applications of computer science in healthcare?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Describe how computer science is used in education.">Describe how computer science is used in education.
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What is the role of computer science in finance?">What is the role of computer science in finance?
+    </div>
+    <div class="question">
+        <input type="checkbox" value=" Explain the significance of simulations in computer science."> Explain the significance of simulations in computer science.
+    </div>
+    <div class="question">
+        <input type="checkbox" value=" What are some uses of AI in business?"> What are some uses of AI in business?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="How does computer science contribute to environmental science?">How does computer science contribute to environmental science?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Describe the impact of computer science on communication.">Describe the impact of computer science on communication.
+    </div>
+    <div class="question">
+        <input type="checkbox" value="What are the ethical implications of technology in society?">What are the ethical implications of technology in society?
+    </div>
+    <div class="question">
+        <input type="checkbox" value=" Explain the role of software in modern businesses."> Explain the role of software in modern businesses.
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="How does computer science facilitate innovation?">How does computer science facilitate innovation?
+    </div>
+</div>
+
+<!-- Chapter: Impacts of Computing -->
+<h3>Chapter 6: Impacts of Computing</h3>
+<div id="impacts-computing-shorts">
+    <div class="question"> 
+        <input type="checkbox" value="What are the positive impacts of computing on society?">What are the positive impacts of computing on society?
+    </div>
+    <div class="question">
+        <input type="checkbox" value=" Describe the negative effects of technology on privacy."> Describe the negative effects of technology on privacy.
+    </div>
+    <div class="question">
+        <input type="checkbox" value="How has computing changed the job market?">How has computing changed the job market?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Explain the term digital divide.">Explain the term "digital divide."
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What role does technology play in globalization?">What role does technology play in globalization?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What are the environmental impacts of computing?">What are the environmental impacts of computing?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="How does computing affect mental health?">How does computing affect mental health?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Describe the impact of computing on education.">Describe the impact of computing on education.
+    </div>
+    <div class="question">
+        <input type="checkbox" value="What are the ethical considerations in computing?">What are the ethical considerations in computing?
+    </div>
+    <div class="question">
+        <input type="checkbox" value="How does technology influence social interactions?">How does technology influence social interactions?
+    </div>
+    <div class="question">
+        <input type="checkbox" value="What are the defining characteristics of a relational database? Discuss the role of tables, keys, and relationships in structuring data.">What are the defining characteristics of a relational database? Discuss the role of tables, keys, and relationships in structuring data.
+    </div>
+    <div class="question">
+        <input type="checkbox" value="Explain the SQL query language, including common commands for data manipulation, and provide examples of each.">Explain the SQL query language, including common commands for data manipulation, and provide examples of each.
+    </div>
+    <div class="question">
+        <input type="checkbox" value="Discuss the process of normalization in databases. What are the different normal forms, and why is normalization important?">Discuss the process of normalization in databases. What are the different normal forms, and why is normalization important?
+    </div>
+    <div class="question">
+        <input type="checkbox" value="What are ACID properties in the context of database transactions, and why are they crucial for maintaining data integrity?">What are ACID properties in the context of database transactions, and why are they crucial for maintaining data integrity?
+    </div>
+    <div class="question">
+        <input type="checkbox" value="Analyze the differences between OLTP (Online Transaction Processing) and OLAP (Online Analytical Processing) systems, including their use cases.">Analyze the differences between OLTP (Online Transaction Processing) and OLAP (Online Analytical Processing) systems, including their use cases.
+    </div>
+</div>
+
+<!-- Chapter: Digital Literacy --> <!-- Created by Omaimah Muhammed Mushtaq -->
+<h3>Chapter 7: Digital Literacy</h3>
+<div id="digital-literacy-shorts">
+    <div class="question"> 
+        <input type="checkbox" value="What is digital literacy?">What is digital literacy?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Why is digital literacy important in today's world?">Why is digital literacy important in today's world?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Describe the skills involved in digital literacy.">Describe the skills involved in digital literacy.
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="How can individuals improve their digital literacy?">How can individuals improve their digital literacy?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What role does critical thinking play in digital literacy?">What role does critical thinking play in digital literacy?
+    </div>
+     <div class="question">
+        <input type="checkbox" value=" How does digital literacy affect employability"> How does digital literacy affect employability
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Describe the concept of online safety.">Describe the concept of online safety.
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="How does social media literacy contribute to digital citizenship?">How does social media literacy contribute to digital citizenship?
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What is media literacy?">What is media literacy?
+    </div>
+</div>
+
+<!-- Chapter: Entrepreneurship in the Digital Age --><!-- Created by Omaimah Muhammed Mushtaq -->
+<h3>Chapter 8: Entrepreneurship in the Digital Age</h3>
+<div id="entrepreneurship-digital-age-shorts">
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="Describe the role of technology in entrepreneurship.">Describe the role of technology in entrepreneurship.
+    </div>
+    <div class="question">
+        <input type="checkbox" value="What is a value proposition?">What is a value proposition?
+    </div>
+    <div class="question">
+        <input type="checkbox" value="Explain the concept of market research.">Explain the concept of market research.
+    </div>
+    <div class="question"> 
+        <input type="checkbox" value="What are the benefits of digital marketing for startups?">What are the benefits of digital marketing for startups?
+    </div>
+    <div class="question">
+        <input type="checkbox" value=" Describe the significance of customer feedback."> Describe the significance of customer feedback.
+    </div>
+    <div class="question">
+        <input type="checkbox" value=" What are some common funding sources for startups?"> What are some common funding sources for startups?
+    </div>
+    <div class="question">
+        <input type="checkbox" value="Explain the term scalability in business.">Explain the term "scalability" in business.
+    </div>
+    <div class="question">
+        <input type="checkbox" value="What role does networking play in entrepreneurship?"> What role does networking play in entrepreneurship?
+    </div>
+    <div class="question">
+        <input type="checkbox" value=" How can technology facilitate business growth?"> How can technology facilitate business growth?
+    </div>
+     <div class="question">
+        <input type="checkbox" value="Why is successful product development important?"> Why is successful product development important?
+     </div> 
+</div>
+
+
+
+
+
+            <h2>Q3: Select Long Questions</h2>
+            <h3>Chapter 1: Programming Fundamentals</h3>
+            <div id="longQuestions">
+                <div class="question">
+                    <input type="checkbox" value="Describe the process of compiling a program."> Describe the process of compiling a program.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the difference between operating systems."> Explain the difference between operating systems.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What is the significance of data backup?"> What is the significance of data backup?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the various types of computer networks."> Discuss the various types of computer networks.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain how the Internet works."> Explain how the Internet works.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What is the role of an operating system?"> What is the role of an operating system?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the ethical implications of technology."> Discuss the ethical implications of technology.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the concept of virtual memory."> Explain the concept of virtual memory.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How does a computer execute a program?"> How does a computer execute a program?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What is artificial intelligence and its applications?"> What is artificial intelligence and its applications?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the different types of programming languages."> Explain the different types of programming languages.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the impact of technology on society."> Discuss the impact of technology on society.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are the different methods of data transmission?"> What are the different methods of data transmission?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the importance of cybersecurity."> Explain the importance of cybersecurity.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Describe how cloud computing is changing the IT landscape."> Describe how cloud computing is changing the IT landscape.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the various control structures in programming and how they influence the flow of a program's execution."> Discuss the various control structures in programming and how they influence the flow of a program's execution.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are the key differences between synchronous and asynchronous programming? Provide examples to illustrate your points."> What are the key differences between synchronous and asynchronous programming? Provide examples to illustrate your points.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the concept of recursion in programming. How can it be used effectively, and what are its potential pitfalls?"> Explain the concept of recursion in programming. How can it be used effectively, and what are its potential pitfalls?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the role of data structures in programming and how they impact algorithm efficiency and complexity."> Discuss the role of data structures in programming and how they impact algorithm efficiency and complexity.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are common debugging techniques in programming? Discuss their importance in the software development lifecycle."> What are common debugging techniques in programming? Discuss their importance in the software development lifecycle.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Describe the concept of code optimization and the techniques used to improve program efficiency without affecting functionality."> Describe the concept of code optimization and the techniques used to improve program efficiency without affecting functionality.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How do version control systems enhance collaboration in software development? Discuss the role of branches and merging in this process."> How do version control systems enhance collaboration in software development? Discuss the role of branches and merging in this process.
+                </div>
+            
+                <h2>Chapter 2: Computational Thinking and Algorithms </h2>
+                <div class="question">
+                    <input type="checkbox" value="Compare and contrast different data structures such as arrays, linked lists, and hash tables in terms of performance and use cases."> Compare and contrast different data structures such as arrays, linked lists, and hash tables in terms of performance and use cases.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the concept of trees in data structures, including binary trees and binary search trees, and their applications in searching and sorting."> Explain the concept of trees in data structures, including binary trees and binary search trees, and their applications in searching and sorting.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the advantages and disadvantages of using stack and queue data structures, along with real-world applications for each."> Discuss the advantages and disadvantages of using stack and queue data structures, along with real-world applications for each.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are graphs in computer science? Discuss their types and how algorithms like Dijkstra’s are used to solve graph-related problems."> What are graphs in computer science? Discuss their types and how algorithms like Dijkstra’s are used to solve graph-related problems.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the concept of hash functions in hash tables and discuss their importance in ensuring efficient data retrieval."> Explain the concept of hash functions in hash tables and discuss their importance in ensuring efficient data retrieval.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are the characteristics of a good data structure? Discuss how choosing the right data structure can improve algorithm performance."> What are the characteristics of a good data structure? Discuss how choosing the right data structure can improve algorithm performance.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Describe the implementation and use cases of tries in data storage and retrieval, especially in search applications."> Describe the implementation and use cases of tries in data storage and retrieval, especially in search applications.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the concept of dynamic arrays and how they differ from static arrays in terms of memory management and resizing."> Discuss the concept of dynamic arrays and how they differ from static arrays in terms of memory management and resizing.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are balanced trees, and why are they important in maintaining efficient search operations? Discuss examples like AVL trees and Red-Black trees."> What are balanced trees, and why are they important in maintaining efficient search operations? Discuss examples like AVL trees and Red-Black trees.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the role of data structures in algorithm design, providing examples of how specific data structures can optimize performance."> Explain the role of data structures in algorithm design, providing examples of how specific data structures can optimize performance.
+                </div>
+            
+                <h2>Chapter 3: Programming Fundamentals</h2>
+                <div class="question">
+                    <input type="checkbox" value="Define algorithms and discuss their significance in problem-solving, including examples of common algorithms used in software development."> Define algorithms and discuss their significance in problem-solving, including examples of common algorithms used in software development.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the concept of algorithm complexity and the differences between time complexity and space complexity with examples."> Explain the concept of algorithm complexity and the differences between time complexity and space complexity with examples.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the divide-and-conquer strategy in algorithms. Provide an example of an algorithm that employs this strategy and explain how it works."> Discuss the divide-and-conquer strategy in algorithms. Provide an example of an algorithm that employs this strategy and explain how it works.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What is dynamic programming? Discuss its importance and provide examples of problems that can be effectively solved using this technique."> What is dynamic programming? Discuss its importance and provide examples of problems that can be effectively solved using this technique.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Analyze the efficiency of sorting algorithms, including Quick Sort, Merge Sort, and Bubble Sort. Discuss their best and worst-case scenarios."> Analyze the efficiency of sorting algorithms, including Quick Sort, Merge Sort, and Bubble Sort. Discuss their best and worst-case scenarios.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss graph algorithms, including Depth-First Search (DFS) and Breadth-First Search (BFS), and their applications in real-world scenarios."> Discuss graph algorithms, including Depth-First Search (DFS) and Breadth-First Search (BFS), and their applications in real-world scenarios.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the significance of the greedy algorithm approach. Provide examples where this method yields optimal solutions and where it may fail."> Explain the significance of the greedy algorithm approach. Provide examples where this method yields optimal solutions and where it may fail.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are NP-complete problems? Discuss their significance in computer science and the implications of proving whether they can be solved in polynomial time."> What are NP-complete problems? Discuss their significance in computer science and the implications of proving whether they can be solved in polynomial time.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the importance of randomized algorithms. How do they differ from deterministic algorithms, and what advantages do they offer?"> Discuss the importance of randomized algorithms. How do they differ from deterministic algorithms, and what advantages do they offer?
+                </div>
+            
+                <h2>Chapter 4: Data and analysis.</h2>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the four main principles of object-oriented programming: encapsulation, inheritance, polymorphism, and abstraction."> Discuss the four main principles of object-oriented programming: encapsulation, inheritance, polymorphism, and abstraction.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Describe the data analysis lifecycle, including stages from data collection to presentation. How does each stage impact the overall analysis process?"> Describe the data analysis lifecycle, including stages from data collection to presentation. How does each stage impact the overall analysis process?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the importance of data cleaning and preprocessing. What techniques are commonly used to ensure data quality?"> Explain the importance of data cleaning and preprocessing. What techniques are commonly used to ensure data quality?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss how exploratory data analysis (EDA) contributes to understanding data trends and patterns. What tools are typically used in EDA?"> Discuss how exploratory data analysis (EDA) contributes to understanding data trends and patterns. What tools are typically used in EDA?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are the key differences between descriptive and inferential statistics? Provide examples of how each is applied in data analysis."> What are the key differences between descriptive and inferential statistics? Provide examples of how each is applied in data analysis.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Analyze the role of data visualization in presenting analysis results. Discuss various techniques and tools that enhance data storytelling."> Analyze the role of data visualization in presenting analysis results. Discuss various techniques and tools that enhance data storytelling.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain the significance of hypothesis testing in data analysis. What are the common errors associated with hypothesis testing, and how can they be mitigated?"> Explain the significance of hypothesis testing in data analysis. What are the common errors associated with hypothesis testing, and how can they be mitigated?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the importance of big data analytics in today's business environment. How do organizations leverage big data for competitive advantage?"> Discuss the importance of big data analytics in today's business environment. How do organizations leverage big data for competitive advantage?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What role does machine learning play in data analysis? Discuss its applications and how it can improve the accuracy of insights derived from data."> What role does machine learning play in data analysis? Discuss its applications and how it can improve the accuracy of insights derived from data.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Examine ethical considerations in data analysis. How can data analysts ensure they are using data responsibly and ethically?"> Examine ethical considerations in data analysis. How can data analysts ensure they are using data responsibly and ethically?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss how computer science is applied in the healthcare industry. Provide specific examples of technologies that improve patient outcomes and operational efficiency."> Discuss how computer science is applied in the healthcare industry. Provide specific examples of technologies that improve patient outcomes and operational efficiency.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Analyze the role of computer science in financial services. How do technologies like blockchain and algorithms shape modern banking and investing?"> Analyze the role of computer science in financial services. How do technologies like blockchain and algorithms shape modern banking and investing?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Explain how computer science contributes to environmental sustainability. Discuss specific applications that help monitor and address climate change."> Explain how computer science contributes to environmental sustainability. Discuss specific applications that help monitor and address climate change.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What impact has artificial intelligence had on everyday applications? Discuss both positive advancements and potential ethical dilemmas."> What impact has artificial intelligence had on everyday applications? Discuss both positive advancements and potential ethical dilemmas.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the implications of computer science in education. How do online learning platforms and educational technologies enhance learning experiences?"> Discuss the implications of computer science in education. How do online learning platforms and educational technologies enhance learning experiences?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Examine the importance of cybersecurity in today's digital landscape. How do computer science principles inform the development of secure systems?"> Examine the importance of cybersecurity in today's digital landscape. How do computer science principles inform the development of secure systems?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Analyze the impact of computer science on communication. Discuss how technologies like social media and messaging apps have transformed interpersonal communication."> Analyze the impact of computer science on communication. Discuss how technologies like social media and messaging apps have transformed interpersonal communication.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What role does computer science play in logistics and supply chain management? Discuss technologies that enhance efficiency and transparency in these fields."> What role does computer science play in logistics and supply chain management? Discuss technologies that enhance efficiency and transparency in these fields.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Examine the effects of computer science on the entertainment industry. How have streaming services and digital content changed consumer behavior and content creation?"> Examine the effects of computer science on the entertainment industry. How have streaming services and digital content changed consumer behavior and content creation?
+                </div>
+            
+                <div class="question">
+                    <input type="checkbox" value="Discuss the societal impacts of computing technology. How has the digital divide influenced access to information and opportunities?"> Discuss the societal impacts of computing technology. How has the digital divide influenced access to information and opportunities?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Analyze how computing has transformed the workplace. Discuss both the benefits and challenges of remote work enabled by technology."> Analyze how computing has transformed the workplace. Discuss both the benefits and challenges of remote work enabled by technology.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are the psychological effects of prolonged technology use on individuals? Discuss potential issues related to mental health and social interaction."> What are the psychological effects of prolonged technology use on individuals? Discuss potential issues related to mental health and social interaction.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the implications of computing on privacy. How have advances in technology impacted personal privacy, and what measures can be taken to protect it?"> Discuss the implications of computing on privacy. How have advances in technology impacted personal privacy, and what measures can be taken to protect it?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Examine the environmental impact of computing technologies. What are the challenges of electronic waste, and how can the industry address these issues?"> Examine the environmental impact of computing technologies. What are the challenges of electronic waste, and how can the industry address these issues?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What role does computing play in social movements? Discuss how technology has been used to mobilize and organize efforts for social change."> What role does computing play in social movements? Discuss how technology has been used to mobilize and organize efforts for social change.
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the ethical implications of artificial intelligence in decision-making processes. How can biases in AI systems affect outcomes in critical areas?"> Discuss the ethical implications of artificial intelligence in decision-making processes. How can biases in AI systems affect outcomes in critical areas?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Analyze how computing impacts the economy. What are the implications of automation and artificial intelligence on job markets and economic structures?"> Analyze how computing impacts the economy. What are the implications of automation and artificial intelligence on job markets and economic structures?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the role of digital literacy in the modern workforce. How does it affect employability and career advancement in a tech-driven economy?"> Discuss the role of digital literacy in the modern workforce. How does it affect employability and career advancement in a tech-driven economy?
+                </div>
+            
+        
+                <div class="question">
+                    <input type="checkbox" value="Define digital literacy and its components. Why is it essential for individuals in today's technology-driven society?"> Define digital literacy and its components. Why is it essential for individuals in today's technology-driven society?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="Discuss the challenges of achieving digital literacy among diverse populations. What strategies can be implemented to bridge the digital divide?"> Discuss the challenges of achieving digital literacy among diverse populations. What strategies can be implemented to bridge the digital divide?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What challenges do organizations face in implementing data analysis, and what tools can improve accuracy?"> 
+                    What challenges do organizations face in implementing data analysis, and what tools can improve accuracy?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How does data quality impact the effectiveness of analysis?"> 
+                    How does data quality impact the effectiveness of analysis?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What role does big data play in modern data analysis?"> 
+                    What role does big data play in modern data analysis?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How can visualization techniques enhance data interpretation?"> 
+                    How can visualization techniques enhance data interpretation?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What ethical considerations arise in data analysis practices?"> 
+                    What ethical considerations arise in data analysis practices?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How can organizations effectively manage and store large datasets?"> 
+                    How can organizations effectively manage and store large datasets?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are the most common mistakes made in data analysis?"> 
+                    What are the most common mistakes made in data analysis?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How can predictive analytics benefit businesses?"> 
+                    How can predictive analytics benefit businesses?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What skills are essential for effective data analysts?"> 
+                    What skills are essential for effective data analysts?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How do different industries utilize data analysis to drive decision-making?"> 
+                    How do different industries utilize data analysis to drive decision-making?
+                </div>
+                
+                <h3>Chapter 5: Application of Computer Science</h3>
+                <div class="question">
+                    <input type="checkbox" value="What is the role of computer science in driving technological innovation?"> 
+                    What is the role of computer science in driving technological innovation?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How can computer science applications improve efficiency in traditional industries?"> 
+                    How can computer science applications improve efficiency in traditional industries?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are the barriers to implementing computer science in education?"> 
+                    What are the barriers to implementing computer science in education?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How does software development impact business operations?"> 
+                    How does software development impact business operations?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What is the importance of open-source software in computer science?"> 
+                    What is the importance of open-source software in computer science?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How can computer science contribute to solving global challenges?"> 
+                    How can computer science contribute to solving global challenges?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What role does cybersecurity play in the application of computer science?"> 
+                    What role does cybersecurity play in the application of computer science?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How can data science be integrated into business strategies?"> 
+                    How can data science be integrated into business strategies?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What skills are vital for professionals in the field of computer science?"> 
+                    What skills are vital for professionals in the field of computer science?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How does artificial intelligence impact various industries?"> 
+                    How does artificial intelligence impact various industries?
+                </div>
+            <h3>Chapter 6:Impacts of Computing.</h3>
+            <div class="question">
+                <input type="checkbox" value="What are the social impacts of widespread computing technology?"> 
+                What are the social impacts of widespread computing technology?
+            </div>
+            <div class="question">
+                <input type="checkbox" value="How does computing influence economic growth in developing countries?"> 
+                How does computing influence economic growth in developing countries?
+            </div>
+            <div class="question">
+                <input type="checkbox" value="What environmental concerns arise from increased computing activity?"> 
+                What environmental concerns arise from increased computing activity?
+            </div>
+            <div class="question">
+                <input type="checkbox" value="How does computing affect privacy and data security?"> 
+                How does computing affect privacy and data security?
+            </div>
+            <div class="question">
+                <input type="checkbox" value="What role does computing play in enhancing education?"> 
+                What role does computing play in enhancing education?
+            </div>
+            <div class="question">
+                <input type="checkbox" value="How can computing contribute to social justice initiatives?"> 
+                How can computing contribute to social justice initiatives?
+            </div>
+            <div class="question">
+                <input type="checkbox" value="What are the implications of digital divide on society?"> 
+                What are the implications of digital divide on society?
+            </div>
+            <div class="question">
+                <input type="checkbox" value="How do technological advancements impact employment?"> 
+                How do technological advancements impact employment?
+            </div>
+            <div class="question">
+                <input type="checkbox" value="What measures can be taken to ensure equitable access to computing resources?"> 
+                What measures can be taken to ensure equitable access to computing resources?
+            </div>
+            <div class="question">
+                <input type="checkbox" value="How does computing influence cultural change?"> 
+                How does computing influence cultural change?
+            </div>
+           <h3>Chapter 7: Digital literacy.</h3>    
+           <div class="question">
+            <input type="checkbox" value="What are the key components of digital literacy?"> 
+            What are the key components of digital literacy?
+        </div>
+        <div class="question">
+            <input type="checkbox" value="How do socio-economic factors affect digital literacy among populations?"> 
+            How do socio-economic factors affect digital literacy among populations?
+        </div>
+        <div class="question">
+            <input type="checkbox" value="What strategies can schools implement to improve digital literacy?"> 
+            What strategies can schools implement to improve digital literacy?
+        </div>
+        <div class="question">
+            <input type="checkbox" value="How can community programs promote digital literacy among adults?"> 
+            How can community programs promote digital literacy among adults?
+        </div>
+        <div class="question">
+            <input type="checkbox" value="What role do libraries play in enhancing digital literacy?"> 
+            What role do libraries play in enhancing digital literacy?
+        </div>
+        <div class="question">
+            <input type="checkbox" value="How can digital literacy impact employability in the modern job market?"> 
+            How can digital literacy impact employability in the modern job market?
+        </div>
+        <div class="question">
+            <input type="checkbox" value="What challenges do seniors face in achieving digital literacy?"> 
+            What challenges do seniors face in achieving digital literacy?
+        </div>
+        <div class="question">
+            <input type="checkbox" value="How can technology companies contribute to improving digital literacy?"> 
+            How can technology companies contribute to improving digital literacy?
+        </div>
+        <div class="question">
+            <input type="checkbox" value="What are the barriers to accessing digital education resources?"> 
+            What are the barriers to accessing digital education resources?
+        </div>
+        <div class="question">
+            <input type="checkbox" value="How can digital literacy be measured effectively?"> 
+            How can digital literacy be measured effectively?
+        </div>
+                <h3>Chapter 8: Entrepreneurship in Digital Age.</h3>
+                <div class="question">
+                    <input type="checkbox" value="What unique challenges do digital entrepreneurs face today?"> 
+                    What unique challenges do digital entrepreneurs face today?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How can technology be leveraged to enhance startup growth?"> 
+                    How can technology be leveraged to enhance startup growth?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What role does social media play in modern entrepreneurship?"> 
+                    What role does social media play in modern entrepreneurship?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How can entrepreneurs use data analytics for decision-making?"> 
+                    How can entrepreneurs use data analytics for decision-making?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What are the best practices for funding a digital startup?"> 
+                    What are the best practices for funding a digital startup?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How does networking impact entrepreneurial success in the digital age?"> 
+                    How does networking impact entrepreneurial success in the digital age?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What skills are essential for success in digital entrepreneurship?"> 
+                    What skills are essential for success in digital entrepreneurship?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="How can small businesses adapt to digital transformation?"> 
+                    How can small businesses adapt to digital transformation?
+                </div>
+                <div class="question">
+                    <input type="checkbox" value="What ethical considerations should digital entrepreneurs keep in mind?"> 
+                    What ethical considerations should digital entrepreneurs keep in mind?
+                </div>
+            
+            </div>
+          
+            
+            <button type="submit">Generate Paper</button>
+        </form>
+    </div>
+    <script>
+        function selectQuestions() {
+            const paperTitle = document.getElementById('paperTitle').value;
+            const totalMarks = document.getElementById('totalMarks').value;
+
+             
+            const selectedMCQs = [];
+    let mcqMarks = 0;
+
+    for (let i = 1; i <= 40; i++) {
+        const selected = document.querySelector(`input[name="mcq${i}"]:checked`);
+        if (selected) {
+            var q = `Question: ${document.querySelector(`#mcqOptions > div:nth-child(${i}) p:nth-of-type(1)`).textContent}`;
+            q = q+ ` A) : ${document.querySelector(`#mcqOptions > div:nth-child(${i}) p:nth-of-type(2)`).textContent}`;
+            q = q+ ` B) : ${document.querySelector(`#mcqOptions > div:nth-child(${i}) p:nth-of-type(3)`).textContent}`;
+            q = q+ ` C) : ${document.querySelector(`#mcqOptions > div:nth-child(${i}) p:nth-of-type(4)`).textContent}`;
+            q = q+ ` D) : ${document.querySelector(`#mcqOptions > div:nth-child(${i}) p:nth-of-type(5)`).textContent}`;
+            selectedMCQs.push(q);
+            mcqMarks += 1; // Each MCQ is worth 1 mark
+        }
+    }
+
+    // Collect selected Short Questions (3 marks each)
+    const shorts = Array.from(document.querySelectorAll('#shortQuestions input[type="checkbox"]:checked')).map(input => input.value);
+    const shortMarks = (shorts.length/2  * 3); // Each short question is worth 3 marks.s
+
+    // Collect selected Long Questions (5 marks each)
+    const longs = Array.from(document.querySelectorAll('#longQuestions input[type="checkbox"]:checked')).map(input => input.value);
+    const longMarks = (longs.length /2* 5); // Each long question is worth 5 marks.
+
+    // Calculate total marks
+    const totalSelectedMarks = mcqMarks + shortMarks + longMarks;
+
+    // Check if the total selected marks exceed the limit or do not meet the required total marks
+    if (totalSelectedMarks > totalMarks) {
+        alert(`Total marks exceed the limit of ${totalMarks}. Please adjust your selection.`);
+        return false; // Prevent form submission
+    } else if (totalSelectedMarks < totalMarks) {
+        alert(`Total marks selected (${totalSelectedMarks}) do not meet the required total of ${totalMarks}. Please adjust your selection.`);
+        return false; // Prevent form submission
+
+    };
+    
+            // format short questions with OR
+            const formattedshorts =shorts.length > 0 ?`(${shorts.join('(OR)')})`:'';
+            //format long questions with OR
+            const formattedlongs= longQuestions.length> 0?`(${longQuestions.join('(OR)')})`:'';
+
+            // Save the data to local storage
+            localStorage.setItem('paperTitle', paperTitle);
+            localStorage.setItem('totalMarks', totalMarks);
+            localStorage.setItem('selectedMCQs', JSON.stringify(selectedMCQs));
+            localStorage.setItem('selectedShorts', JSON.stringify(shorts));
+            localStorage.setItem('selectedLongs', JSON.stringify(longs));
+
+            // Redirect to the output page
+    //        window.location.href = 'file:///C:/Users/Nexgen/Desktop/img/New%20folder%20(2)/output.html';
+            window.location.href = 'file:///C:/Users/Nexgen/Desktop/software/New%20folder/output%20(2).html';
+
+            return false; // Prevent form submission
+        }
+    </script>
+</body>
+</html>
