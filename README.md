@@ -35,10 +35,6 @@ The app uses JavaScript to:
 
 ---
 
-## 🚀 Live Demo
-[Click to view (if hosted)](#)
-
----
 
 ## 📜 License
 MIT License
